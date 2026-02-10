@@ -205,6 +205,24 @@ with tab2:
         -   Pasang pointer di ujung kiri (`l`) dan kanan (`r`).
         -   Hitung luas area: `(r - l) * min(tinggi[l], tinggi[r])`.
         -   Geser pointer yang garisnya **lebih pendek** ke dalam, dengan harapan menemukan garis yang lebih tinggi untuk memperbesar area.
+        
+        **Jawaban**:
+        ```python
+        def maxArea(height):
+            l, r = 0, len(height) - 1
+            res = 0
+            
+            while l < r:
+                area = (r - l) * min(height[l], height[r])
+                res = max(res, area)
+                
+                if height[l] < height[r]:
+                    l += 1
+                else:
+                    r -= 1
+                    
+            return res
+        ```
         """)
 
     st.markdown("---")
@@ -263,6 +281,43 @@ with tab3:
         -   Jalankan BFS/DFS dari titik itu untuk menandai **semua** daratan yang terhubung sebagai "sudah dikunjungi".
         
         **Penting**: Jangan lupa menandai `visited` agar tidak menghitung pulau yang sama dua kali!
+        
+        **Jawaban**:
+        ```python
+        import collections
+
+        def numIslands(grid):
+            if not grid: return 0
+            
+            rows, cols = len(grid), len(grid[0])
+            visit = set()
+            islands = 0
+            
+            def bfs(r, c):
+                q = collections.deque()
+                visit.add((r, c))
+                q.append((r, c))
+                
+                while q:
+                    row, col = q.popleft()
+                    directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+                    
+                    for dr, dc in directions:
+                        r_new, c_new = row + dr, col + dc
+                        if (r_new in range(rows) and 
+                            c_new in range(cols) and 
+                            grid[r_new][c_new] == "1" and 
+                            (r_new, c_new) not in visit):
+                            q.append((r_new, c_new))
+                            visit.add((r_new, c_new))
+
+            for r in range(rows):
+                for c in range(cols):
+                    if grid[r][c] == "1" and (r, c) not in visit:
+                        bfs(r, c)
+                        islands += 1
+            return islands
+        ```
         """)
 
     st.markdown("---")
@@ -302,4 +357,37 @@ with tab3:
         -   Gunakan **Min-Heap** untuk selalu mengambil elemen terkecil dari `k` kepala list saat ini secara efisien ($O(\log k)$).
         -   Setiap kali elemen diambil dari heap, masukkan elemen berikutnya dari list asal elemen tersebut ke heap.
         -   **Kompleksitas Waktu**: $O(N \log k)$, jauh lebih cepat daripada brute force.
+        
+        **Jawaban**:
+        ```python
+        # Definition for singly-linked list.
+        # class ListNode:
+        #     def __init__(self, val=0, next=None):
+        #         self.val = val
+        #         self.next = next
+        
+        import heapq
+        
+        def mergeKLists(lists):
+            minHeap = []
+            
+            # Add first node of each list to heap
+            for i, l in enumerate(lists):
+                if l:
+                    minHeap.append((l.val, i, l))
+            heapq.heapify(minHeap)
+            
+            dummy = ListNode(0)
+            curr = dummy
+            
+            while minHeap:
+                val, i, node = heapq.heappop(minHeap)
+                curr.next = node
+                curr = node
+                
+                if node.next:
+                    heapq.heappush(minHeap, (node.next.val, i, node.next))
+                    
+            return dummy.next
+        ```
         """)
