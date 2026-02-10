@@ -21,7 +21,7 @@ with st.sidebar:
     - [ML System Design Interview](https://github.com/chiphuyen/ml-system-design-book) - Chip Huyen.
     
     **Video Tutorial:**
-    - [CampusX - Sklearn Pipelines](https://www.youtube.com/watch?v=1x48wW0h6vo)
+    - [Data School - Scikit-Learn Pipelines](https://www.youtube.com/watch?v=irHhDMBW3xe)
     - [StatQuest - Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8)
     """)
 
