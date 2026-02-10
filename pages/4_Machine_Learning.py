@@ -21,8 +21,11 @@ with st.sidebar:
     - [ML System Design Interview](https://github.com/chiphuyen/ml-system-design-book) - Chip Huyen.
     
     **Video Tutorial:**
-    - [Data School - Scikit-Learn Pipelines](https://www.youtube.com/watch?v=irHhDMBW3xe)
+    - [Krish Naik - Creating Pipelines Using Sklearn](https://www.youtube.com/watch?v=w9auF4BMrlk)
     - [StatQuest - Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8)
+    
+    **Dokumentasi Resmi:**
+    - [Sklearn Pipelines Guide](https://scikit-learn.org/stable/modules/compose.html)
     """)
 
 tab1, tab2, tab3 = st.tabs(["🟢 Custom Transformers", "🟡 Pipelines (Intermediate)", "🔴 Metrics from Scratch"])
