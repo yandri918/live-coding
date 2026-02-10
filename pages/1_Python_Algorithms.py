@@ -4,10 +4,11 @@ import time
 st.set_page_config(page_title="Python Algorithms", page_icon="🐍", layout="wide")
 
 st.markdown("# 🐍 Python Algorithms & Data Structures")
-st.markdown("### Master Common Interview Patterns")
+st.markdown("### Menguasai Pola Interview Coding (Bahasa Indonesia)")
+st.markdown("Modul ini mengadopsi pola dari LeetCode untuk melatih logika algoritma Anda, lengkap dengan materi dan penjelasan mendalam.")
 
 # Tabs for Difficulty Levels
-tab1, tab2, tab3 = st.tabs(["🟢 Beginner", "🟡 Intermediate", "🔴 Advanced"])
+tab1, tab2, tab3 = st.tabs(["🟢 Beginner (Pemula)", "🟡 Intermediate (Menengah)", "🔴 Advanced (Mahir)"])
 
 def check_solution(user_code, test_cases):
     """
@@ -16,340 +17,289 @@ def check_solution(user_code, test_cases):
     try:
         # Dangerous in production, okay for local protected demo
         # exec(user_code) 
-        st.success("Code executed successfully! All test cases passed. (Simulation)")
+        st.success("✅ Kode berhasil dijalankan! (Simulasi output benar)")
         st.balloons()
     except Exception as e:
-        st.error(f"Error: {e}")
+        st.error(f"⚠️ Error: {e}")
 
 # BEGINNER
 with tab1:
-    st.header("🟢 Beginner: Arrays & Hashing")
-    st.markdown("**Focus**: Mastering Hash Maps (Dictionaries) for O(1) lookups.")
+    st.header("🟢 Level Pemula: Arrays & Hashing")
+    
+    st.markdown("""
+    ### 📚 Materi Singkat: Hash Map
+    **Hash Map** (di Python disebut `dict`) adalah struktur data paling penting untuk interview.
+    -   **Keunggulan**: Mencari data (lookup) hanya butuh waktu rata-rata **O(1)**.
+    -   **Kapan dipakai?**: Jika Anda butuh mencari sesuatu (misal: "apakah angka ini pernah muncul sebelumnya?") dengan sangat cepat.
+    """)
+    
+    st.markdown("---")
     
     # Problem 1: Two Sum
-    with st.expander("📝 Problem 1: Two Sum (LeetCode #1)", expanded=True):
-        st.markdown("""
-        **Description**: Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
-        **Constraints**: exactly one solution.
-        
-        **Example**:
-        ```python
-        Input: nums = [2,7,11,15], target = 9
-        Output: [0,1]
-        ```
-        """)
-        
-        code1 = st.text_area("Your Solution:", height=150, key="code_beg_1", value="""def twoSum(nums, target):
+    st.subheader("📝 Soal 1: Two Sum (LeetCode #1)")
+    
+    st.markdown("""
+    **Deskripsi**: 
+    Diberikan array integer `nums` dan integer `target`, kembalikan **indeks** dari dua angka yang jika dijumlahkan menghasilkan `target`.
+    
+    **Contoh**:
+    ```python
+    Input: nums = [2,7,11,15], target = 9
+    Output: [0,1]
+    # Karena nums[0] + nums[1] == 2 + 7 == 9
+    ```
+    """)
+    
+    code1 = st.text_area("Tulis Solusi Anda:", height=150, key="code_beg_1", value="""def twoSum(nums, target):
+    # Tulis logika di sini
     pass
 """)
-        if st.button("Run Code", key="btn_beg_1"):
-            check_solution(code1, [])
-            
-        st.markdown("### 💡 Comprehensive Solution")
+    if st.button("Jalankan Kode", key="btn_beg_1"):
+        check_solution(code1, [])
+        
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
         st.markdown("""
-        **Approach 1: Brute Force**
-        - Loop through each element `x` and find if there is another value that equals to `target - x`.
-        - **Time**: $O(n^2)$ | **Space**: $O(1)$
+        **Strategi**: One-pass Hash Map
+        1.  Kita butuh mencari pasangan `x` sehingga `x + angka_sekarang = target`.
+        2.  Artinya, kita mencari `x = target - angka_sekarang`.
+        3.  Sambil kita loop array, kita simpan setiap angka dan indeksnya ke dalam *dictionary*.
+        4.  Di setiap langkah, cek apakah `diff` (selisih) sudah ada di dictionary.
         
-        **Approach 2: One-pass Hash Map (Optimal)**
-        - We iterate through the array once. For each element `n`, we check if `target - n` exists in our hash map.
-        - If it does, we found our pair. If not, we store `n` and its index in the map.
-        - **Time**: $O(n)$ | **Space**: $O(n)$
+        **Jawaban**:
+        ```python
+        def twoSum(nums, target):
+            prevMap = {}  # val : index
+            
+            for i, n in enumerate(nums):
+                diff = target - n
+                if diff in prevMap:
+                    return [prevMap[diff], i]
+                prevMap[n] = i
+            return []
+        ```
+        **Kompleksitas**:
+        -   **Waktu**: $O(n)$ - Kita hanya loop array sekali.
+        -   **Memori**: $O(n)$ - Dictionary menyimpan maksimal $n$ elemen.
         """)
-        
-        st.code("""
-def twoSum(nums, target):
-    prevMap = {}  # val : index
-    
-    for i, n in enumerate(nums):
-        diff = target - n
-        if diff in prevMap:
-            return [prevMap[diff], i]
-        prevMap[n] = i
-    return []
-        """, language="python")
 
     st.markdown("---")
     
     # Problem 2: Valid Anagram
-    with st.expander("📝 Problem 2: Valid Anagram (LeetCode #242)"):
-        st.markdown("""
-        **Description**: Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.
+    st.subheader("📝 Soal 2: Valid Anagram (LeetCode #242)")
+    
+    st.markdown("""
+    **Deskripsi**: 
+    Diberikan dua string `s` dan `t`, kembalikan `True` jika `t` adalah anagram dari `s` (huruf penyusunnya sama persis), dan `False` jika bukan.
+    """)
+    
+    code2 = st.text_area("Tulis Solusi Anda:", height=150, key="code_beg_2", value="def isAnagram(s, t):\n    pass")
+    
+    if st.button("Jalankan Kode", key="btn_beg_2"):
+        check_solution(code2, [])
         
-        **Example**:
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
+        st.markdown("""
+        **Strategi**: Hitung Frekuensi Karakter
+        Anagram berarti jumlah setiap huruf harus sama persis.
+        1.  Jika panjang string beda, pasti bukan anagram.
+        2.  Hitung frekuensi huruf di `s` dan `t` menggunakan Hash Map atau Array (ukuran 26 untuk huruf a-z).
+        3.  Bandingkan kedua hitungan tersebut.
+        
+        **Jawaban**:
         ```python
-        Input: s = "anagram", t = "nagaram"
-        Output: true
+        def isAnagram(s, t):
+            if len(s) != len(t):
+                return False
+                
+            countS, countT = {}, {}
+            
+            for i in range(len(s)):
+                countS[s[i]] = countS.get(s[i], 0) + 1
+                countT[t[i]] = countT.get(t[i], 0) + 1
+                
+            return countS == countT
         ```
         """)
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Count Character Frequencies
-        - Use a hash map (or fixed-size array of 26 integers) to count occurrences of each char in `s`.
-        - Decrement counts for `t`. If all counts are zero, it's an anagram.
-        - **Time**: $O(n)$ | **Space**: $O(1)$ (since only 26 lowercase chars)
-        """)
-        st.code("""
-def isAnagram(s, t):
-    if len(s) != len(t):
-        return False
-        
-    countS, countT = {}, {}
-    
-    for i in range(len(s)):
-        countS[s[i]] = countS.get(s[i], 0) + 1
-        countT[t[i]] = countT.get(t[i], 0) + 1
-        
-    return countS == countT
-        """, language="python")
 
     st.markdown("---")
 
     # Problem 3: Contains Duplicate
-    with st.expander("📝 Problem 3: Contains Duplicate (LeetCode #217)"):
+    st.subheader("📝 Soal 3: Contains Duplicate (LeetCode #217)")
+    st.markdown("""
+    **Deskripsi**: 
+    Diberikan array integer `nums`, kembalikan `True` jika ada angka yang muncul minimal dua kali.
+    """)
+    
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
         st.markdown("""
-        **Description**: Given an integer array `nums`, return `true` if any value appears at least twice in the array, and return `false` if every element is distinct.
+        **Strategi**: Hash Set
+        Gunakan `set()` karena `set` tidak menyimpan duplikat dan pengecekan keberadaan elemen (`in`) sangat cepat $O(1)$.
+        
+        **Jawaban**:
+        ```python
+        def containsDuplicate(nums):
+            hashset = set()
+            for n in nums:
+                if n in hashset:
+                    return True
+                hashset.add(n)
+            return False
+        ```
         """)
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Hash Set
-        - Iterate through the array, checking if the number is already in a `set`.
-        - Sets provide $O(1)$ average time complexity for lookups.
-        - **Time**: $O(n)$ | **Space**: $O(n)$
-        """)
-        st.code("""
-def containsDuplicate(nums):
-    hashset = set()
-    for n in nums:
-        if n in hashset:
-            return True
-        hashset.add(n)
-    return False
-        """, language="python")
 
 # INTERMEDIATE
 with tab2:
-    st.header("🟡 Intermediate: Two Pointers & Sliding Window")
+    st.header("🟡 Level Menengah: Two Pointers & Sliding Window")
     
-    # Problem 1: Valid Parentheses (Stack)
-    with st.expander("📝 Problem 1: Valid Parentheses (LeetCode #20)", expanded=True):
+    st.markdown("""
+    ### 📚 Materi Singkat
+    1.  **Two Pointers**: Menggunakan dua penunjuk (indeks) untuk memproses array, biasanya dari dua arah berlawanan atau bersamaan. Efisien untuk mengurangi kompleksitas dari $O(n^2)$ ke $O(n)$.
+    2.  **Sliding Window**: Mempertahankan "jendela" (sub-array) yang memenuhi kondisi tertentu, dan menggesernya.
+    """)
+    
+    # Problem 1: Valid Parentheses
+    st.subheader("📝 Soal 1: Valid Parentheses (LeetCode #20)")
+    st.markdown("""
+    **Deskripsi**: 
+    Cek apakah string kurung `()[]{}` valid. Valid jika kurung buka ditutup dengan jenis yang sama dan urutan yang benar.
+    """)
+    
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
         st.markdown("""
-        **Description**: Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+        **Strategi**: Stack (Tumpukan)
+        -   Stack bekerja dengan prinsip **LIFO** (Last In, First Out).
+        -   Jika ketemu kurung buka, masukkan ke stack.
+        -   Jika ketemu kurung tutup, cek apakah stack kosong ATAU elemen teratas stack bukan pasangannya.
         
-        **Example**:
+        **Jawaban**:
         ```python
-        Input: s = "()[]{}"
-        Output: true
+        def isValid(s):
+            stack = []
+            map = {")": "(", "]": "[", "}": "{"}
+            
+            for c in s:
+                if c in map:
+                    if stack and stack[-1] == map[c]:
+                        stack.pop()
+                    else:
+                        return False
+                else:
+                    stack.append(c)
+            return True if not stack else False
         ```
         """)
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Stack
-        - Use a stack to keep track of opening brackets.
-        - When encountering a closing bracket, check if it matches the top of the stack.
-        - **Time**: $O(n)$ | **Space**: $O(n)$
-        """)
-        st.code("""
-def isValid(s):
-    stack = []
-    closeToOpen = { ")": "(", "]": "[", "}": "{" }
-    
-    for c in s:
-        if c in closeToOpen:
-            if stack and stack[-1] == closeToOpen[c]:
-                stack.pop()
-            else:
-                return False
-        else:
-            stack.append(c)
-            
-    return True if not stack else False
-        """, language="python")
-        
+
     st.markdown("---")
 
     # Problem 2: Container With Most Water
-    with st.expander("📝 Problem 2: Container With Most Water (LeetCode #11)"):
-        st.markdown("Find two lines that together with the x-axis form a container, such that the container contains the most water.")
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Two Pointers
-        - Start with pointers at the beginning (`l`) and end (`r`) of the array.
-        - Calculate area. To potentially maximize area, move the pointer pointing to the *shorter* line inward.
-        - **Time**: $O(n)$ | **Space**: $O(1)$
-        """)
-        st.code("""
-def maxArea(height):
-    l, r = 0, len(height) - 1
-    res = 0
+    st.subheader("📝 Soal 2: Container With Most Water (LeetCode #11)")
+    st.markdown("**Deskripsi**: Cari dua garis vertikal yang menampung air paling banyak.")
     
-    while l < r:
-        area = (r - l) * min(height[l], height[r])
-        res = max(res, area)
+    code_int_2 = st.text_area("Tulis Solusi Anda:", height=150, key="code_int_2")
+    if st.button("Jalankan Kode", key="btn_int_2"):
+        check_solution(code_int_2, [])
         
-        if height[l] < height[r]:
-            l += 1
-        else:
-            r -= 1
-            
-    return res
-        """, language="python")
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
+        st.markdown("""
+        **Strategi**: Two Pointers
+        -   Pasang pointer di ujung kiri (`l`) dan kanan (`r`).
+        -   Hitung luas area: `(r - l) * min(tinggi[l], tinggi[r])`.
+        -   Geser pointer yang garisnya **lebih pendek** ke dalam, dengan harapan menemukan garis yang lebih tinggi untuk memperbesar area.
+        """)
 
     st.markdown("---")
 
     # Problem 3: Longest Substring Without Repeating Characters
-    with st.expander("📝 Problem 3: Longest Substring Without Repeating Characters (LeetCode #3)"):
+    st.subheader("📝 Soal 3: Longest Substring Unique (LeetCode #3)")
+    st.markdown("**Deskripsi**: Cari panjang substring terpanjang tanpa huruf berulang.")
+    
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
         st.markdown("""
-        **Description**: Given a string `s`, find the length of the longest substring without repeating characters.
+        **Strategi**: Sliding Window
+        -   Gunakan `set` untuk menyimpan huruf di jendela saat ini.
+        -   Gunakan pointer `l` (kiri) dan `r` (kanan).
+        -   Jika `s[r]` sudah ada di `set`, geser `l` maju dan hapus karakter dari `set` sampai duplikat hilang.
         
-        **Example**:
+        **Jawaban**:
         ```python
-        Input: s = "abcabcbb"
-        Output: 3  # "abc"
+        def lengthOfLongestSubstring(s):
+            charSet = set()
+            l = 0
+            res = 0
+            
+            for r in range(len(s)):
+                while s[r] in charSet:
+                    charSet.remove(s[l])
+                    l += 1
+                charSet.add(s[r])
+                res = max(res, r - l + 1)
+            return res
         ```
         """)
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Sliding Window
-        - Use a `set` to store characters in the current window.
-        - If we see a duplicate, remove characters from the left (`l`) until the duplicate is gone.
-        - **Time**: $O(n)$ | **Space**: $O(n)$
-        """)
-        st.code("""
-def lengthOfLongestSubstring(s):
-    charSet = set()
-    l = 0
-    res = 0
-    
-    for r in range(len(s)):
-        while s[r] in charSet:
-            charSet.remove(s[l])
-            l += 1
-        charSet.add(s[r])
-        res = max(res, r - l + 1)
-    return res
-        """, language="python")
 
 # ADVANCED
 with tab3:
-    st.header("🔴 Advanced: DP & Graphs")
+    st.header("🔴 Level Mahir: DP & Graphs")
+    
+    st.markdown("""
+    ### 📚 Materi Singkat
+    1.  **Graph (BFS/DFS)**: Digunakan untuk menelusuri hubungan antar node (misal: peta, jaringan). BFS menyebar melebar, DFS menukik mendalam.
+    2.  **Dynamic Programming (DP)**: Memecah masalah besar menjadi sub-masalah kecil dan menyimpan hasilnya (caching) agar tidak dihitung ulang.
+    """)
     
     # Problem 1: Number of Islands
-    with st.expander("📝 Problem 1: Number of Islands (LeetCode #200)", expanded=True):
-        st.markdown("""
-        **Description**: Given an `m x n` 2D binary grid `grid` which represents a map of '1's (land) and '0's (water), return the number of islands.
-        """)
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Breadth-First Search (BFS) or DFS
-        - Iterate through every cell. If it's a '1' and not visited, trigger a BFS/DFS to mark the entire island as visited.
-        - Increment island count.
-        - **Time**: $O(m \times n)$ | **Space**: $O(m \times n)$
-        """)
-        st.code("""
-import collections
-
-def numIslands(grid):
-    if not grid: return 0
+    st.subheader("📝 Soal 1: Number of Islands (LeetCode #200)")
+    st.markdown("**Deskripsi**: Hitung jumlah pulau ('1') dalam grid lautan ('0').")
     
-    rows, cols = len(grid), len(grid[0])
-    visit = set()
-    islands = 0
-    
-    def bfs(r, c):
-        q = collections.deque()
-        visit.add((r, c))
-        q.append((r, c))
+    code_adv_1 = st.text_area("Tulis Solusi Anda:", height=200, key="code_adv_1")
+    if st.button("Jalankan Kode", key="btn_adv_1"):
+        check_solution(code_adv_1, [])
         
-        while q:
-            row, col = q.popleft()
-            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-            
-            for dr, dc in directions:
-                r_new, c_new = row + dr, col + dc
-                if (r_new in range(rows) and 
-                    c_new in range(cols) and 
-                    grid[r_new][c_new] == "1" and 
-                    (r_new, c_new) not in visit):
-                    q.append((r_new, c_new))
-                    visit.add((r_new, c_new))
-
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == "1" and (r, c) not in visit:
-                bfs(r, c)
-                islands += 1
-    return islands
-        """, language="python")
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
+        st.markdown("""
+        **Strategi**: Graph Traversal (BFS/DFS)
+        -   Loop setiap sel di grid.
+        -   Jika ketemu daratan ('1') yang belum dikunjungi, itu adalah pulau baru. Tambah counter `islands + 1`.
+        -   Jalankan BFS/DFS dari titik itu untuk menandai **semua** daratan yang terhubung sebagai "sudah dikunjungi".
+        
+        **Penting**: Jangan lupa menandai `visited` agar tidak menghitung pulau yang sama dua kali!
+        """)
 
     st.markdown("---")
 
-    # Problem 2: Climbing Stairs (DP)
-    with st.expander("📝 Problem 2: Climbing Stairs (LeetCode #70)"):
-        st.markdown("""
-        **Description**: You are climbing a staircase. It takes `n` steps to reach the top. Each time you can either climb 1 or 2 steps. How many distinct ways can you climb to the top?
-        """)
-        st.markdown("### 💡 Comprehensive Solution")
-        st.markdown("""
-        **Approach**: Dynamic Programming (Bottom-Up)
-        - This is essentially the Fibonacci sequence.
-        - `ways(n) = ways(n-1) + ways(n-2)`
-        - **Time**: $O(n)$ | **Space**: $O(1)$
-        """)
-        st.code("""
-def climbStairs(n):
-    one, two = 1, 1
+    # Problem 2: Climbing Stairs
+    st.subheader("📝 Soal 2: Climbing Stairs (LeetCode #70)")
+    st.markdown("**Deskripsi**: Ada `n` anak tangga. Anda bisa naik 1 atau 2 langkah. Berapa banyak cara unik ke puncak?")
     
-    for i in range(n - 1):
-        temp = one
-        one = one + two
-        two = temp
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
+        st.markdown("""
+        **Strategi**: Dynamic Programming (Bottom-Up)
+        -   Cara ke tangga ke-`i` adalah jumlah cara ke tangga `i-1` ditambah cara ke tangga `i-2`.
+        -   Ini identik dengan deret **Fibonacci**.
         
-    return one
-        """, language="python")
+        **Jawaban**:
+        ```python
+        def climbStairs(n):
+            one, two = 1, 1
+            for i in range(n - 1):
+                temp = one
+                one = one + two
+                two = temp
+            return one
+        ```
+        """)
 
     st.markdown("---")
     
     # Problem 3: Merge K Sorted Lists
-    with st.expander("📝 Problem 3: Merge K Sorted Lists (LeetCode #23)"):
-        st.markdown("Merge `k` sorted linked lists and return it as one sorted list.")
-        st.markdown("### 💡 Comprehensive Solution")
+    st.subheader("📝 Soal 3: Merge K Sorted Lists (LeetCode #23)")
+    st.markdown("**Deskripsi**: Gabungkan `k` linked-list yang sudah terurut menjadi satu list terurut.")
+    
+    with st.expander("💡 Lihat Penjelasan & Jawaban"):
         st.markdown("""
-        **Approach**: Min-Heap
-        - Push the first node of each list into a Min-Heap.
-        - Pop the smallest node, add to result, and push its next node into the heap.
-        - **Time**: $O(N \log k)$ where N is total nodes.
+        **Strategi**: Min-Heap (Priority Queue)
+        -   Kita tidak bisa hanya membandingkan semua kepala list sekaligus secara naif ($O(k \cdot N)$).
+        -   Gunakan **Min-Heap** untuk selalu mengambil elemen terkecil dari `k` kepala list saat ini secara efisien ($O(\log k)$).
+        -   Setiap kali elemen diambil dari heap, masukkan elemen berikutnya dari list asal elemen tersebut ke heap.
+        -   **Kompleksitas Waktu**: $O(N \log k)$, jauh lebih cepat daripada brute force.
         """)
-        st.code("""
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
-
-import heapq
-
-def mergeKLists(lists):
-    minHeap = []
-    
-    # Add first node of each list to heap
-    for i, l in enumerate(lists):
-        if l:
-            minHeap.append((l.val, i, l))
-    heapq.heapify(minHeap)
-    
-    dummy = ListNode(0)
-    curr = dummy
-    
-    while minHeap:
-        val, i, node = heapq.heappop(minHeap)
-        curr.next = node
-        curr = node
-        
-        if node.next:
-            heapq.heappush(minHeap, (node.next.val, i, node.next))
-            
-    return dummy.next
-        """, language="python")
-
-
