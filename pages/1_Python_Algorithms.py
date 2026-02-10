@@ -7,6 +7,19 @@ st.markdown("# 🐍 Python Algorithms & Data Structures")
 st.markdown("### Menguasai Pola Interview Coding (Bahasa Indonesia)")
 st.markdown("Modul ini mengadopsi pola dari LeetCode untuk melatih logika algoritma Anda, lengkap dengan materi dan penjelasan mendalam.")
 
+# Sidebar Resources
+with st.sidebar:
+    st.header("📚 Referensi Belajar")
+    st.markdown("""
+    **Rekomendasi Utama:**
+    - [NeetCode.io](https://neetcode.io) - Roadmap terbaik untuk interview.
+    - [Python Data Structures Docs](https://docs.python.org/3/tutorial/datastructures.html) - Dokumentasi resmi.
+    
+    **Video Tutorial (YouTube):**
+    - [NeetCode - Blind 75](https://www.youtube.com/watch?v=KLlXCFG5TnA&list=PLot-Xpze53ldVwtstag2TL4HQhAnC8ATf)
+    - [Python for Coding Interviews](https://www.youtube.com/watch?v=0K_eZGS5NsU)
+    """)
+
 # Tabs for Difficulty Levels
 tab1, tab2, tab3 = st.tabs(["🟢 Beginner (Pemula)", "🟡 Intermediate (Menengah)", "🔴 Advanced (Mahir)"])
 

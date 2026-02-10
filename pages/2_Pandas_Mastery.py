@@ -8,6 +8,18 @@ st.markdown("# 🐼 Pandas Mastery")
 st.markdown("### Tantangan Manipulasi & Pembersihan Data")
 st.markdown("Modul ini dirancang untuk mengasah kemampuan manipulasi data Anda dari level dasar hingga mahir, dengan penjelasan dalam **Bahasa Indonesia**.")
 
+with st.sidebar:
+    st.header("📚 Referensi Belajar")
+    st.markdown("""
+    **Dokumentasi & Artikel:**
+    - [Pandas User Guide](https://pandas.pydata.org/docs/user_guide/index.html) - Kitab suci Pandas.
+    - [10 Minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html) - Ringkasan cepat.
+    
+    **Video Tutorial (YouTube):**
+    - [Keith Galli - Complete Pandas Tutorial (Pro!!)](https://www.youtube.com/watch?v=vmEHCJofslg)
+    - [Data School - Pandas Tips](https://www.youtube.com/watch?v=hl-TJI4rmks)
+    """)
+
 # Helper to compare dataframes
 def check_dataframe(user_df, expected_df):
     try:

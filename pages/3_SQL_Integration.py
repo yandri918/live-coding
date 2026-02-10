@@ -8,6 +8,18 @@ st.markdown("# 💾 SQL Integration with DuckDB")
 st.markdown("### Eksekusi Query SQL Langsung (Bahasa Indonesia)")
 st.markdown("Modul ini menggunakan **DuckDB** (database OLAP cepat) untuk melatih kemampuan SQL Anda dari dasar hingga Window Functions.")
 
+with st.sidebar:
+    st.header("📚 Referensi Belajar")
+    st.markdown("""
+    **Dokumentasi:**
+    - [DuckDB SQL Introduction](https://duckdb.org/docs/sql/introduction)
+    - [PostgreSQL Tutorial (Mode Analytics)](https://mode.com/sql-tutorial/)
+    
+    **Video Tutorial (YouTube):**
+    - [Alex The Analyst - SQL Portfolio](https://www.youtube.com/watch?v=7PWEgYx9xqM)
+    - [Advanced SQL Window Functions](https://www.youtube.com/watch?v=Ww71knvhQ-s)
+    """)
+
 # Setup Sandbox Database
 @st.cache_resource
 def get_connection():
